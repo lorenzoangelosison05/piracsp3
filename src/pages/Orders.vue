@@ -1,5 +1,7 @@
 <template>
   <div class="container py-5">
+  <div class="card border-0 shadow-sm">
+    <div class="card-body p-4">
     <div class="d-flex justify-content-between align-items-center mb-4">
       <h1>All User Orders</h1>
       <RouterLink to="/products" class="btn btn-dark">
@@ -21,7 +23,7 @@
 
    
     <div v-if="!isLoading && orders.length > 0" class="table-responsive">
-      <table class="table table-bordered">
+      <table class="table table-hover table-striped align-middle mb-0">
         <thead class="table-dark">
           <tr>
             <th>Order ID</th>
@@ -38,7 +40,7 @@
             <td>
               <ul class="mb-0">
                 <li v-for="item in order.productsOrdered" :key="item.productId">
-                  Product ID: {{ item.productId }} (Qty: {{ item.quantity }})
+                  {{ productName(item.productId) }} (Qty: {{ item.quantity }})
                 </li>
               </ul>
             </td>
@@ -48,7 +50,9 @@
         </tbody>
       </table>
     </div>
+      </div>
   </div>
+</div>
 </template>
 
 <script setup>
@@ -61,7 +65,26 @@ const router = useRouter()
 const user = useUserStore()
 
 const orders = ref([])
+const productsById = ref({})
 const isLoading = ref(false)
+
+
+const fetchProducts = async () => {
+  try {
+    // Admin endpoint that returns all products
+    const res = await api.get('/products')
+    const map = {}
+    for (const p of res.data) map[p._id] = p
+    productsById.value = map
+  } catch (error) {
+    console.error('Failed to fetch products for order view:', error)
+    productsById.value = {}
+  }
+}
+
+const productName = (productId) => {
+  return productsById.value?.[productId]?.name || productId
+}
 
 const fetchAllOrders = async () => {
   isLoading.value = true
@@ -91,6 +114,7 @@ onMounted(() => {
   } else if (!user.isAdmin) {
     router.push('/products')
   } else {
+    fetchProducts()
     fetchAllOrders()
   }
 })
