@@ -1,0 +1,43 @@
+import { createRouter, createWebHistory } from 'vue-router'
+import Register from '../pages/Register.vue'
+import Login from '../pages/Login.vue'
+import Products from '../pages/Products.vue'
+import ProductDetails from '../pages/ProductDetails.vue'
+import Cart from '../pages/Cart.vue'
+import AddProduct from '../pages/AddProduct.vue'
+import EditProduct from '../pages/EditProduct.vue'
+
+const routes = [
+  { path: '/', redirect: '/products' },
+  { path: '/register', name: 'Register', component: Register },
+  { path: '/login', name: 'Login', component: Login },
+  { path: '/products', name: 'Products', component: Products, meta: { requiresAuth: true } },
+  { path: '/products/:id', name: 'ProductDetails', component: ProductDetails, meta: { requiresAuth: true } },
+  { path: '/cart', name: 'Cart', component: Cart, meta: { requiresAuth: true } },
+  { path: '/add-product', name: 'AddProduct', component: AddProduct, meta: { requiresAuth: true, requiresAdmin: true } },
+  { path: '/edit-product/:id', name: 'EditProduct', component: EditProduct, meta: { requiresAuth: true, requiresAdmin: true } }
+]
+
+const router = createRouter({
+  history: createWebHistory(),
+  routes
+})
+
+
+router.beforeEach((to, from, next) => {
+  const token = localStorage.getItem('token')
+  
+ 
+  if ((to.path === '/login' || to.path === '/register') && token) {
+    return next('/products')
+  }
+  
+
+  if (to.meta.requiresAuth && !token) {
+    return next('/login')
+  }
+  
+  next()
+})
+
+export default router
