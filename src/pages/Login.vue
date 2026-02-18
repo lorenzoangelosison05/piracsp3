@@ -59,6 +59,7 @@ onMounted(() => {
     
     <div class="card mx-auto shadow-sm" style="max-width: 420px;">
       <div class="card-body p-4">
+       <form @submit.prevent="login">
         <div class="mb-3">
           <label class="form-label">Email:</label>
           <input
@@ -66,6 +67,8 @@ onMounted(() => {
             type="email"
             class="form-control"
             placeholder="Enter your email"
+            autocomplete="email"
+            name="email"
             required
           />
         </div>
@@ -77,6 +80,8 @@ onMounted(() => {
             type="password"
             class="form-control"
             placeholder="Enter your password"
+            autocomplete="current-password" 
+            name="password"
             required
           />
         </div>
@@ -96,6 +101,7 @@ onMounted(() => {
           ></span>
           Submit
         </button>
+       </form>
       </div>
     </div>
     

@@ -113,7 +113,7 @@ const updateProduct = async () => {
   try {
     isUpdating.value = true;
 
-    await api.put(`/products/${route.params.id}`, {
+    await api.patch(`/products/${route.params.id}/update`, {
       name: name.value,
       description: description.value,
       price: price.value,

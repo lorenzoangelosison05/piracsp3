@@ -6,9 +6,9 @@
       <RouterLink to="/add-product" class="btn btn-primary">
         Add New Product
       </RouterLink>
-      <button class="btn btn-success">
+      <RouterLink to="/orders" class="btn btn-success">
         Show User Orders
-      </button>
+      </RouterLink>
     </div>
 
     <div v-if="isLoading" class="text-center my-5 py-5">
@@ -40,13 +40,13 @@
             </td>
             <td>
               <div class="d-flex gap-1">
-                <RouterLink :to="`/edit-product/${product._id}`" class="btn btn-primary btn-sm">
+                <RouterLink :to="`/edit-product/${product._id}`" class="btn btn-primary btn-sm " @click="editProduct(product._id)">
                   Update
                 </RouterLink>
-                <button v-if="product.isActive" class="btn btn-danger btn-sm">
+                <button v-if="product.isActive" class="btn btn-danger btn-sm" @click="disableProduct(product._id)">
                   Disable
                 </button>
-                <button v-else class="btn btn-success btn-sm">
+                <button v-else class="btn btn-success btn-sm" @click="activateProduct(product._id)">
                   Activate
                 </button>
               </div>
@@ -60,9 +60,10 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
-import { RouterLink } from 'vue-router'
+import { RouterLink, useRouter } from 'vue-router'
 import api from '../api'
 
+const router = useRouter()
 const products = ref([])
 const isLoading = ref(false)
 
@@ -75,6 +76,32 @@ const fetchAllProducts = async () => {
     console.error('Failed to fetch products:', error)
   }
   isLoading.value = false
+}
+
+const editProduct = (productId) => {
+  router.push(`/edit-product/${productId}`)
+}
+
+const disableProduct = async (productId) => {
+  try {
+    await api.patch(`/products/${productId}/archive`)
+    // Refresh the product list
+    await fetchAllProducts()
+  } catch (error) {
+    console.error('Failed to disable product:', error)
+    alert('Failed to disable product')
+  }
+}
+
+const activateProduct = async (productId) => {
+  try {
+    await api.patch(`/products/${productId}/activate`)
+    // Refresh the product list
+    await fetchAllProducts()
+  } catch (error) {
+    console.error('Failed to activate product:', error)
+    alert('Failed to activate product')
+  }
 }
 
 onMounted(() => {

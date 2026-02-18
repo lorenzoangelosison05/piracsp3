@@ -6,6 +6,7 @@ import ProductDetails from '../pages/ProductDetails.vue'
 import Cart from '../pages/Cart.vue'
 import AddProduct from '../pages/AddProduct.vue'
 import EditProduct from '../pages/EditProduct.vue'
+import Orders from '../pages/Orders.vue'
 
 const routes = [
   { path: '/', redirect: '/products' },
@@ -14,6 +15,7 @@ const routes = [
   { path: '/products', name: 'Products', component: Products, meta: { requiresAuth: true } },
   { path: '/products/:id', name: 'ProductDetails', component: ProductDetails, meta: { requiresAuth: true } },
   { path: '/cart', name: 'Cart', component: Cart, meta: { requiresAuth: true } },
+  { path: '/orders', name: 'Orders', component: Orders, meta: { requiresAuth: true, requiresAdmin: true } },
   { path: '/add-product', name: 'AddProduct', component: AddProduct, meta: { requiresAuth: true, requiresAdmin: true } },
   { path: '/edit-product/:id', name: 'EditProduct', component: EditProduct, meta: { requiresAuth: true, requiresAdmin: true } }
 ]
