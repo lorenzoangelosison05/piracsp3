@@ -2,7 +2,7 @@
   <div class="container py-5">
     <div class="d-flex justify-content-between align-items-center mb-4">
       <h1>All User Orders</h1>
-      <RouterLink to="/products" class="btn btn-secondary">
+      <RouterLink to="/products" class="btn btn-dark">
         Back to Dashboard
       </RouterLink>
     </div>
