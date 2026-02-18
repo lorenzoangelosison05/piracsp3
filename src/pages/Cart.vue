@@ -33,7 +33,7 @@
                 {{ item.productName || 'Product' }}
               </RouterLink>
             </td>
-            <td>₱{{ item.price }}</td>
+            <td>₱{{ (item.subtotal / item.quantity).toFixed(2) }}</td>
             <td>
               <div class="d-flex align-items-center">
                 <button 
