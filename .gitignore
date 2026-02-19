@@ -29,3 +29,5 @@ coverage
 *.sw?
 
 *.tsbuildinfo
+
+# Editor directories and files
