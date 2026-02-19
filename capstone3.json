@@ -1,9 +1,5 @@
 {
-  "url": "https://67r8kwor87.execute-api.us-east-2.amazonaws.com/production",
-  "routesPrefix": {
-    "users": "/users",
-    "products": "/products",
-    "orders": "/orders",
-    "cart": "/cart"
-  }
+  "url": "https://piracsp3-nzd1zlhtb-lorenzos-projects-8a66feef.vercel.app"
+
+  "url": "https://e-commerce-pxjlofdzd-kyles-projects-ee9e9248.vercel.app/"
 }
