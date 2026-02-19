@@ -1,7 +1,4 @@
-<!-- users (admin only) -->
-<li v-if="user.isAdmin" class="nav-item">
-  <RouterLink class="nav-link" to="/admin/users">Users</RouterLink>
-</li>
+
 <template>
   <nav class="navbar navbar-expand-lg">
     <div class="container">
